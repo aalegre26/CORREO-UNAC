@@ -1,3 +1,10 @@
+import time
+
+hora = time.localtime()
+print (type(hora))
+
+
+"""
 from secrets import choice
 import csv
 
@@ -20,7 +27,7 @@ def removeCharSpecial(cad):
 
     return output
 
-with open('DATA.csv') as csvarchivo:
+with open('usuer.csv') as csvarchivo:
     #ARCHVIO CON LA DATA
     entrada = csv.DictReader(csvarchivo)
     #ARCHIVO DE SALIDA
@@ -63,6 +70,7 @@ with open('DATA.csv') as csvarchivo:
 del entrada, salida, reg
 csvsalida.close()
 del csvsalida
+"""
 
         
 
