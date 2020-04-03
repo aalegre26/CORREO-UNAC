@@ -1,10 +1,3 @@
-import time
-
-hora = time.localtime()
-print (type(hora))
-
-
-"""
 from secrets import choice
 import csv
 
@@ -70,7 +63,3 @@ with open('usuer.csv') as csvarchivo:
 del entrada, salida, reg
 csvsalida.close()
 del csvsalida
-"""
-
-        
-
