@@ -20,46 +20,75 @@ def removeCharSpecial(cad):
 
     return output
 
-with open('usuer.csv') as csvarchivo:
+with open('DATA-INGRESANTES.csv') as csvarchivo:
     #ARCHVIO CON LA DATA
     entrada = csv.DictReader(csvarchivo)
-    #ARCHIVO DE SALIDA
-    csvsalida = open('uemailADM.csv', 'w', newline='')
+    #ARCHIVO DE SALIDA PARA GSUITE
+    csvsalida = open('uGsuite.csv', 'w', newline='')
     salida = csv.writer(csvsalida)
+    #ARCHIVO DE SALIDA PARA SGA
+    csvsalida1 = open('uSGA.csv','w',newline='')
+    salida1 =csv.writer(csvsalida1)
+
 
 
     salida.writerow(["First Name [Required]","Last Name [Required]","Email Address [Required]","Password [Required]","Password Hash Function [UPLOAD ONLY]","Org Unit Path [Required]","New Primary Email [UPLOAD ONLY]","Home Secondary Email","Work Secondary Email","Work Phone","Home Phone","Mobile Phone","Work Address","Home Address","Employee ID","Employee Type","Employee Title","Manager Email","Department","Cost Center","Building ID","Floor Name","Floor Section","Change Password at Next Sign-In"])
 
     for reg in entrada:
         Lname = reg['PATERNO'] + " " + reg['MATERNO']
-        Fname = reg['NAME']
+        Fname = reg['PRIMER NOMBRE']
 
         apeP = removeCharSpecial(reg['PATERNO']).replace(' ','')
         apeM = removeCharSpecial(reg['MATERNO'])[0:1]
-        name = removeCharSpecial(reg['NAME'])[0:1]
+        name = removeCharSpecial(reg['PRIMER NOMBRE'])[0:1]
 
-        if(reg['NAME1'] != "" ):
-            Fname += " " + reg ['NAME1']
-            name += removeCharSpecial(reg['NAME1'])[0:1]
+        if(reg['SEGUNDO NOMBRE'] != "" ):
+            Fname += " " + reg ['SEGUNDO NOMBRE']
+            name += removeCharSpecial(reg['SEGUNDO NOMBRE'])[0:1]
 
-        if(reg['NAME2'] != "" ):
-            Fname += " " + reg ['NAME2']
-            name += removeCharSpecial(reg['NAME2'])[0:1]
+        if(reg['TERCER NOMBRE'] != "" ):
+            Fname += " " + reg ['TERCER NOMBRE']
+            name += removeCharSpecial(reg['TERCER NOMBRE'])[0:1]
     
-        if(reg['NAME3'] != "" ):
-            Fname += " " + reg ['NAME3']
-            name += removeCharSpecial(reg['NAME3'])[0:1]
+        if(reg['CUARTO NOMBRE'] != "" ):
+            Fname += " " + reg ['CUARTO NOMBRE']
+            name += removeCharSpecial(reg['CUARTO NOMBRE'])[0:1]
 
-        if(reg['NAME4'] != ""):
-            Fname += " " + reg ['NAME4']
-            name += removeCharSpecial(reg['NAME4'])[0:1]
+        if(reg['QUINTO NOMBRE'] != ""):
+            Fname += " " + reg ['QUINTO NOMBRE']
+            name += removeCharSpecial(reg['QUINTO NOMBRE'])[0:1]
         
         correo = name + apeP + apeM + "@unac.edu.pe"
         
         PASS = passSure()
 
-        salida.writerow([Fname, Lname, correo, PASS,'','/','','','','','','','','','','','','','','','','','',"TRUE" ])
+        switcher = {
+        "1": "/FCA",
+        "11": "/FCC",
+        "21": "/FCE",
+        "31": "/FIEE",
+        "32": "/FIEE",
+        "41": "/FIPA",
+        "42": "/FIPA",
+        "51": "/FIIS",
+        "52": "/FIIS",
+        "61": "/FIQ",
+        "71": "/FIME",
+        "72": "/FIME",
+        "81": "/FCS",
+        "82": "/FCS",
+        "91": "/FCNM",
+        "92": "/FCNM",
+        "95": "/FIARN",       
+    }                  
 
-del entrada, salida, reg
+        path = switcher.get(reg['COD_FAC'], "/")
+        cod_fac = reg['COD_FAC']
+        cod_alu = reg['COD_ALU']
+        salida.writerow([Fname, Lname, correo, PASS,'',path,'','','','','','','','','','','','','','','','','',"TRUE" ])
+        salida1.writerow([Fname, Lname, correo, cod_alu,cod_fac,PASS])
+
+del entrada, salida, salida1, reg
 csvsalida.close()
-del csvsalida
+csvsalida1.close()
+del csvsalida, csvsalida1
