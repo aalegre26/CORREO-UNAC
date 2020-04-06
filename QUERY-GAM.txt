@@ -1,0 +1,56 @@
+/ALUMNO/
+select distinct e.value, a.em_btxs_nombres, a.em_btxs_apellido_paterno, a.em_btxs_apellido_materno, a.value
+        from	edu_matricula_detalle md 
+	inner join edu_matricula m on md.edu_matricula_id = m.edu_matricula_id
+	inner join ad_org e on m.ad_org_id = e.ad_org_id
+	inner join edu_calendario_academico c on m.edu_calendario_academico_id = c.edu_calendario_academico_id
+	inner join c_bpartner a on m.edu_alumno_id = a.c_bpartner_id
+        where m.edu_calendario_academico_id = '8B52AA0B9A8942319AB016E35FE2B8EE' AND m.docstatus = 'CO' AND e.em_edu_nivel_estudios = 'Pregrado'
+        order by e.value, a.value; 
+
+select distinct e.value, a.em_btxs_nombres, a.em_btxs_apellido_paterno, a.em_btxs_apellido_materno, a.value
+        from	edu_matricula_detalle md 
+	inner join edu_matricula m on md.edu_matricula_id = m.edu_matricula_id
+	inner join ad_org e on m.ad_org_id = e.ad_org_id
+	inner join edu_calendario_academico c on m.edu_calendario_academico_id = c.edu_calendario_academico_id
+	inner join c_bpartner a on m.edu_alumno_id = a.c_bpartner_id
+        where m.edu_calendario_academico_id = '8B52AA0B9A8942319AB016E35FE2B8EE' AND m.docstatus = 'CO' AND a.value='1615225139'
+        order by e.value, a.value; 
+/DOCENTE/
+select distinct ao.value,cbp.em_btxs_nombres, cbp.em_btxs_apellido_paterno,cbp.em_btxs_apellido_materno,cbp.value
+                from	edu_matricula_detalle md
+                inner join edu_matricula m on md.edu_matricula_id = m.edu_matricula_id
+                inner join edu_curso cu on md.edu_curso_id = cu.edu_curso_id
+                inner join ad_org ao on m.ad_org_id = ao.ad_org_id
+                inner join edu_calendario_academico c on m.edu_calendario_academico_id = c.edu_calendario_academico_id
+                inner join c_bpartner a on m.edu_alumno_id = a.c_bpartner_id
+                inner JOIN edu_seccion s on s.edu_seccion_id = md.edu_seccion_id
+                left join btx_sede sed_s on s.btx_sede_id = sed_s.btx_sede_id
+                left join c_bpartner cbp on s.docente_id = cbp.c_bpartner_id
+                left join edu_ciclo ci on cu.edu_ciclo_id = ci.edu_ciclo_id
+                where	m.edu_calendario_academico_id = '8B52AA0B9A8942319AB016E35FE2B8EE' AND m.docstatus = 'CO' AND ao.em_edu_nivel_estudios = 'Pregrado'
+                order by cbp.value; 
+/CODIGOS CICLO/
+619F3632770F447D9E3F873BD0BEFADF --> 2020A
+8B52AA0B9A8942319AB016E35FE2B8EE --> 2019B
+DBB5B7A1BD3D423ABE86956D26CFF257 --> 2019A
+
+
+
+
+COMANDOS GAM
+*No es necesario en @unac.edu.pe
+*Si el nombre es compuesto o hya signos especiales debe ir en comillas simples
+
+Para crear 1 usuario sin cambio de contraseña
+gam create user prueban firstname "ANGEL EDUARDO" lastname "ACUÑA P" password 3R89FWKA
+
+Para crear 1 usuario con cambio de contraseña en el 1er inicio de sesion
+gam create user prueban@unac.edu.pe firstname "ANGEL EDUARDO" lastname "ACUÑA P" password 3R89FWKA changepassword on
+
+Para actualizar unidad organizativa
+gam update user prueban@unac.edu.pe firstname "ANGEL EDUARDO" lastname "ACUÑA P" password 3R89FWKA changepassword on org /FCA
+
+Para eliminar un usuario
+gam delete user prueban@unac.edu.pe
+
